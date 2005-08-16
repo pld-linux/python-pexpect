@@ -4,7 +4,7 @@ Summary(pl):	Modu³ Pythona automatyzuj±cy zadania, wzorowany na Expect
 Name:		python-%{module}
 Version:	0.999
 Release:	0.1
-License:	Python Software Foundation License
+License:	PSF
 Group:		Development/Languages/Python
 Source0:	http://dl.sourceforge.net/sourceforge/pexpect/%{module}-%{version}.tgz
 # Source0-md5:	e426e5f54d323aaf392008c9eb35131d
@@ -15,7 +15,8 @@ Source2:	http://dl.sourceforge.net/sourceforge/pexpect/%{module}-examples.tgz
 URL:		http://pexpect.soufceforge.net/
 BuildRequires:	python-modules
 BuildRequires:	python-devel >= 2.2
-%pyrequires_eq	python
+BuildRequires:	rpmbuild(macros) >= 1.219
+%pyrequires_eq	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,10 +33,7 @@ pozwala skryptom z ich poziomu uruchomiæ inne programy i sprawowaæ nad nimi
 kontrolê imituj±c interakcjê u¿ytkownika.
 
 %prep
-%setup -q -n %{module}-%{version} -a1
-cp %{SOURCE1} %{SOURCE2} .
-tar zxf %{SOURCE1} 
-tar zxf %{SOURCE2}
+%setup -q -n %{module}-%{version} -a 1 -a 2
 
 %build
 python setup.py build
@@ -43,19 +41,21 @@ python setup.py build
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/
 
 python setup.py install \
 	--root=$RPM_BUILD_ROOT
 
+install examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{py_sitescriptdir}/*.py[co]
-%{_examplesdir}/%{name}-%{version}/*.py
 %doc README.txt doc/*.html
+%{py_sitescriptdir}/*.py[co]
+%{_examplesdir}/%{name}-%{version}
