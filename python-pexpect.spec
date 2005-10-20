@@ -2,12 +2,12 @@
 Summary:	Expect module for Python
 Summary(pl):	Modu³ Pythona automatyzuj±cy zadania, wzorowany na Expect
 Name:		python-%{module}
-Version:	0.999
-Release:	0.1
+Version:	0.99999b
+Release:	1
 License:	PSF
 Group:		Development/Languages/Python
 Source0:	http://dl.sourceforge.net/pexpect/%{module}-%{version}.tgz
-# Source0-md5:	e426e5f54d323aaf392008c9eb35131d
+# Source0-md5:	c5435bfd4a3705efdf898b46b344da09
 Source1:	http://dl.sourceforge.net/pexpect/%{module}-doc.tgz
 # Source1-md5:	69bfc0056938f561875289651c8715ad
 Source2:	http://dl.sourceforge.net/pexpect/%{module}-examples.tgz
