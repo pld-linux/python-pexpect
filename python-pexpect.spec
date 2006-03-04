@@ -2,19 +2,19 @@
 Summary:	Expect module for Python
 Summary(pl):	Modu³ Pythona automatyzuj±cy zadania, wzorowany na Expect
 Name:		python-%{module}
-Version:	0.99999b
+Version:	2.0
 Release:	1
 License:	PSF
 Group:		Development/Languages/Python
-Source0:	http://dl.sourceforge.net/pexpect/%{module}-%{version}.tgz
-# Source0-md5:	c5435bfd4a3705efdf898b46b344da09
+Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tgz
+# Source0-md5:	f1501c102cf8af01a49674e139d1c828
 Source1:	http://dl.sourceforge.net/pexpect/%{module}-doc.tgz
 # Source1-md5:	69bfc0056938f561875289651c8715ad
-Source2:	http://dl.sourceforge.net/pexpect/%{module}-examples.tgz
-# Source2-md5:	ee05cad1d7b6b4de0dc74bc16330b852
+Source2:	http://dl.sourceforge.net/pexpect/pexpect-%{version}-examples.tgz
+# Source2-md5:	bd50df4f2b17e32d4405ab76b3fa4ecb
 URL:		http://pexpect.soufceforge.net/
-BuildRequires:	python-modules
 BuildRequires:	python-devel >= 2.2
+BuildRequires:	python-modules
 BuildRequires:	rpmbuild(macros) >= 1.219
 %pyrequires_eq	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -57,6 +57,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt doc/*.html
+%doc README doc/*.html
 %{py_sitescriptdir}/*.py[co]
 %{_examplesdir}/%{name}-%{version}
