@@ -1,6 +1,6 @@
 %define		module	pexpect
 Summary:	Expect module for Python
-Summary(pl):	Modu³ Pythona automatyzuj±cy zadania, wzorowany na Expect
+Summary(pl.UTF-8):   ModuÅ‚ Pythona automatyzujÄ…cy zadania, wzorowany na Expect
 Name:		python-%{module}
 Version:	2.0
 Release:	1
@@ -26,12 +26,12 @@ Pexpect works like Don Libes' Expect. Pexpect allows your script to
 spawn a child application and control it as if a human were typing
 commands.
 
-%description -l pl
-Pexpect jest modu³em napisanym wy³±cznie w Pythonie przeznaczonym do
+%description -l pl.UTF-8
+Pexpect jest moduÅ‚em napisanym wyÅ‚Ä…cznie w Pythonie przeznaczonym do
 uruchamiania aplikacji i kontroli nad nimi poprzez reagowanie na
-znalezione wzorce na ich wyj¶ciu. Pexpect dzia³a podobnie do Expecta
-Dona Libesa - pozwala skryptom z ich poziomu uruchomiæ inne programy i
-sprawowaæ nad nimi kontrolê imituj±c interakcjê u¿ytkownika.
+znalezione wzorce na ich wyjÅ›ciu. Pexpect dziaÅ‚a podobnie do Expecta
+Dona Libesa - pozwala skryptom z ich poziomu uruchomiÄ‡ inne programy i
+sprawowaÄ‡ nad nimi kontrolÄ™ imitujÄ…c interakcjÄ™ uÅ¼ytkownika.
 
 %prep
 %setup -q -n %{module}-%{version} -a 1 -a 2
