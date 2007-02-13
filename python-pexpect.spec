@@ -1,6 +1,6 @@
 %define		module	pexpect
 Summary:	Expect module for Python
-Summary(pl.UTF-8):   Moduł Pythona automatyzujący zadania, wzorowany na Expect
+Summary(pl.UTF-8):	Moduł Pythona automatyzujący zadania, wzorowany na Expect
 Name:		python-%{module}
 Version:	2.0
 Release:	1
