@@ -2,17 +2,13 @@
 Summary:	Expect module for Python
 Summary(pl.UTF-8):	Moduł Pythona automatyzujący zadania, wzorowany na Expect
 Name:		python-%{module}
-Version:	2.0
+Version:	2.1
 Release:	1
 License:	PSF
 Group:		Development/Languages/Python
-Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tgz
-# Source0-md5:	f1501c102cf8af01a49674e139d1c828
-Source1:	http://dl.sourceforge.net/pexpect/%{module}-doc.tgz
-# Source1-md5:	69bfc0056938f561875289651c8715ad
-Source2:	http://dl.sourceforge.net/pexpect/pexpect-%{version}-examples.tgz
-# Source2-md5:	bd50df4f2b17e32d4405ab76b3fa4ecb
-URL:		http://pexpect.soufceforge.net/
+Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
+# Source0-md5:	fd3d67ac085332f074cd665424dcd631
+URL:		http://pexpect.sourceforge.net/
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -34,7 +30,7 @@ Dona Libesa - pozwala skryptom z ich poziomu uruchomić inne programy i
 sprawować nad nimi kontrolę imitując interakcję użytkownika.
 
 %prep
-%setup -q -n %{module}-%{version} -a 1 -a 2
+%setup -q -n %{module}-%{version}
 
 %build
 python setup.py build
