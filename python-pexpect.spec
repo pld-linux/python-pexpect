@@ -2,17 +2,18 @@
 Summary:	Expect module for Python
 Summary(pl.UTF-8):	Moduł Pythona automatyzujący zadania, wzorowany na Expect
 Name:		python-%{module}
-Version:	2.1
+Version:	2.2
 Release:	1
 License:	PSF
 Group:		Development/Languages/Python
 Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
-# Source0-md5:	fd3d67ac085332f074cd665424dcd631
+# Source0-md5:	e700b8f791aef290b794f1b66e06ad91
 URL:		http://pexpect.sourceforge.net/
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules
 BuildRequires:	rpmbuild(macros) >= 1.219
 %pyrequires_eq	python-modules
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
