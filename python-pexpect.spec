@@ -11,6 +11,7 @@ Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
 URL:		http://pexpect.sourceforge.net/
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 %pyrequires_eq	python-modules
 BuildArch:	noarch
@@ -34,13 +35,13 @@ sprawować nad nimi kontrolę imitując interakcję użytkownika.
 %setup -q -n %{module}-%{version}
 
 %build
-python setup.py build
+%{__python} setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-python setup.py install \
+%{__python} setup.py install \
 	--root=$RPM_BUILD_ROOT
 
 install examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
