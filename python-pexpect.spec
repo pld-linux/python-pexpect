@@ -3,17 +3,17 @@ Summary:	Expect module for Python
 Summary(pl.UTF-8):	Moduł Pythona automatyzujący zadania, wzorowany na Expect
 Name:		python-%{module}
 Version:	2.3
-Release:	6
+Release:	7
 License:	PSF
 Group:		Development/Languages/Python
-Source0:	http://dl.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
 # Source0-md5:	bf107cf54e67bc6dec5bea1f3e6a65c3
 URL:		http://pexpect.sourceforge.net/
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
-%pyrequires_eq	python-modules
+Requires:	python-modules
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -39,15 +39,14 @@ sprawować nad nimi kontrolę imitując interakcję użytkownika.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
 %{__python} setup.py install \
+	--skip-build \
+	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
 
-install examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-%py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
-%py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_postclean
 
 %clean
@@ -57,4 +56,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README doc/*.html
 %{py_sitescriptdir}/*.py[co]
+%{py_sitescriptdir}/pexpect-%{version}-py*.egg-info
 %{_examplesdir}/%{name}-%{version}
