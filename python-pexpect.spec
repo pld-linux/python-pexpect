@@ -1,19 +1,46 @@
+#
+# Conditional build:
+%bcond_without	python2	# CPython 2.x module
+%bcond_without	python3	# CPython 3.x module
+%bcond_without	tests	# py.test tests
+%bcond_without	doc	# Sphinx documentation
+
 %define		module	pexpect
-Summary:	Expect module for Python
-Summary(pl.UTF-8):	Moduł Pythona automatyzujący zadania, wzorowany na Expect
+Summary:	Pure Python Expect-like module
+Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
-Version:	2.3
-Release:	8
-License:	PSF
+Version:	4.2.1
+Release:	1
+License:	ISC
 Group:		Development/Languages/Python
-Source0:	http://downloads.sourceforge.net/pexpect/pexpect-%{version}.tar.gz
-# Source0-md5:	bf107cf54e67bc6dec5bea1f3e6a65c3
-URL:		http://pexpect.sourceforge.net/
-BuildRequires:	python-devel >= 2.2
-BuildRequires:	python-modules
+#Source0Download: https://pypi.python.org/simple/pexpect
+Source0:	https://pypi.python.org/packages/e8/13/d0b0599099d6cd23663043a2a0bb7c61e58c6ba359b2656e6fb000ef5b98/pexpect-%{version}.tar.gz
+# Source0-md5:	3694410001a99dff83f0b500a1ca1c95
+URL:		http://pexpect.readthedocs.io/
+%if %{with tests} && %(locale -a | grep -q '^C\.UTF-8$'; echo $?)
+BuildRequires:	glibc-localedb-all
+%endif
+%if %{with python2}
+BuildRequires:	python-devel >= 1:2.7
+BuildRequires:	python-modules >= 1:2.7
+%if %{with tests}
+BuildRequires:	python-ptyprocess >= 0.5
+BuildRequires:	python-pytest
+%endif
+%endif
+%if %{with python3}
+BuildRequires:	python3-modules >= 1:3.2
+%if %{with tests}
+BuildRequires:	python3-ptyprocess >= 0.5
+BuildRequires:	python3-pytest
+%endif
+%endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
-Requires:	python-modules
+BuildRequires:	rpmbuild(macros) >= 1.714
+%if %{with doc}
+BuildRequires:	sphinx-pdg
+%endif
+Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -31,27 +58,103 @@ znalezione wzorce na ich wyjściu. Pexpect działa podobnie do Expecta
 Dona Libesa - pozwala skryptom z ich poziomu uruchomić inne programy i
 sprawować nad nimi kontrolę imitując interakcję użytkownika.
 
+%package -n python3-%{module}
+Summary:	Pure Python Expect-like module
+Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
+Group:		Development/Languages/Python
+Requires:	python3-modules >= 1:3.2
+
+%description -n python3-%{module}
+Pexpect is a pure Python module for spawning child applications;
+controlling them; and responding to expected patterns in their output.
+Pexpect works like Don Libes' Expect. Pexpect allows your script to
+spawn a child application and control it as if a human were typing
+commands.
+
+%description -n python3-%{module} -l pl.UTF-8
+Pexpect jest modułem napisanym wyłącznie w Pythonie przeznaczonym do
+uruchamiania aplikacji i kontroli nad nimi poprzez reagowanie na
+znalezione wzorce na ich wyjściu. Pexpect działa podobnie do Expecta
+Dona Libesa - pozwala skryptom z ich poziomu uruchomić inne programy i
+sprawować nad nimi kontrolę imitując interakcję użytkownika.
+
+%package apidocs
+Summary:	Documentation for Python pexpect module
+Summary(pl.UTF-8):	Dokumentacja do modułu Pythona pexpect
+Group:		Documentation
+
+%description apidocs
+Documentation for Python pexpect module.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja do modułu Pythona pexpect.
+
 %prep
 %setup -q -n %{module}-%{version}
 
 %build
+%if %{with python2}
 %py_build
+
+%{?with_tests:LC_ALL=C.UTF-8 %{__python} -m pytest tests}
+%endif
+
+%if %{with python3}
+%py3_build
+
+%{?with_tests:LC_ALL=C.UTF-8 %{__python3} -m pytest tests}
+%endif
+
+%if %{with doc}
+%{__make} -C doc html
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+%if %{with python2}
 %py_install
 
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -p examples/*.py {ANSI,FSM,screen}.py $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
 %py_postclean
+
+%{__rm} $RPM_BUILD_ROOT%{py_sitescriptdir}/pexpect/bashrc.sh
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%endif
+
+%if %{with python3}
+%py3_install
+
+%{__rm} $RPM_BUILD_ROOT%{py3_sitescriptdir}/pexpect/bashrc.sh
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
+cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc README doc/*.html
-%{py_sitescriptdir}/*.py[co]
+%doc LICENSE README.rst
+%{py_sitescriptdir}/pexpect
 %{py_sitescriptdir}/pexpect-%{version}-py*.egg-info
 %{_examplesdir}/%{name}-%{version}
+%endif
+
+%if %{with python3}
+%files -n python3-%{module}
+%defattr(644,root,root,755)
+%doc LICENSE README.rst
+%{py3_sitescriptdir}/pexpect
+%{py3_sitescriptdir}/pexpect-%{version}-py*.egg-info
+%{_examplesdir}/python3-%{module}-%{version}
+%endif
+
+%if %{with doc}
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/_build/html/{_static,api,*.html,*.js}
+%endif
