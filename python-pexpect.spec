@@ -1,4 +1,3 @@
-#
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
@@ -10,7 +9,7 @@ Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
 Version:	4.2.1
-Release:	1
+Release:	2
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/pexpect
