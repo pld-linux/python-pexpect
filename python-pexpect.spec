@@ -9,7 +9,7 @@ Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
 Version:	4.2.1
-Release:	2
+Release:	3
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/pexpect
