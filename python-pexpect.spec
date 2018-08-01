@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
@@ -8,15 +9,16 @@
 Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
-Version:	4.2.1
-Release:	3
+Version:	4.6.0
+Release:	1
 License:	ISC
 Group:		Development/Languages/Python
-#Source0Download: https://pypi.python.org/simple/pexpect
-Source0:	https://pypi.python.org/packages/e8/13/d0b0599099d6cd23663043a2a0bb7c61e58c6ba359b2656e6fb000ef5b98/pexpect-%{version}.tar.gz
-# Source0-md5:	3694410001a99dff83f0b500a1ca1c95
+#Source0Download: https://pypi.org/simple/pexpect/
+Source0:	https://files.pythonhosted.org/packages/source/p/pexpect/pexpect-%{version}.tar.gz
+# Source0-md5:	d4f3372965a996238d57d19b95d2e03a
+Patch0:		%{name}-tests.patch
 URL:		http://pexpect.readthedocs.io/
-%if %{with tests} && %(locale -a | grep -q '^C\.UTF-8$'; echo $?)
+%if %{with tests} && %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
@@ -90,6 +92,7 @@ Dokumentacja do modułu Pythona pexpect.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch0 -p1
 
 %build
 %if %{with python2}
