@@ -10,7 +10,7 @@ Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
 Version:	4.6.0
-Release:	1
+Release:	2
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/pexpect/
@@ -42,6 +42,7 @@ BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sphinx-pdg
 %endif
 Requires:	python-modules >= 1:2.7
+Requires:	python-ptyprocess >= 0.5
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,6 +65,7 @@ Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Group:		Development/Languages/Python
 Requires:	python3-modules >= 1:3.2
+Requires:	python3-ptyprocess >= 0.5
 
 %description -n python3-%{module}
 Pexpect is a pure Python module for spawning child applications;
