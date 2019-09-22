@@ -9,14 +9,13 @@
 Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
-Version:	4.6.0
-Release:	2
+Version:	4.7.0
+Release:	1
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/pexpect/
 Source0:	https://files.pythonhosted.org/packages/source/p/pexpect/pexpect-%{version}.tar.gz
-# Source0-md5:	d4f3372965a996238d57d19b95d2e03a
-Patch0:		%{name}-tests.patch
+# Source0-md5:	ed003242cbf308aee1b1eaecdef59e43
 URL:		http://pexpect.readthedocs.io/
 %if %{with tests} && %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -94,7 +93,6 @@ Dokumentacja do modułu Pythona pexpect.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
 
 %build
 %if %{with python2}
