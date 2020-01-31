@@ -1,0 +1,15 @@
+--- pexpect-4.8.0/setup.py.orig	2020-01-17 18:08:15.000000000 +0100
++++ pexpect-4.8.0/setup.py	2020-01-31 20:55:52.519565509 +0100
+@@ -1,11 +1,9 @@
+ # encoding: utf-8
+-from distutils.core import setup
+ import os
+ import re
+ import sys
+ 
+-if any(a == 'bdist_wheel' for a in sys.argv):
+-    from setuptools import setup
++from setuptools import setup
+ 
+ with open(os.path.join(os.path.dirname(__file__), 'pexpect', '__init__.py'), 'r') as f:
+     for line in f:
