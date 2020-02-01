@@ -10,7 +10,7 @@ Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
 Version:	4.8.0
-Release:	1
+Release:	2
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/pexpect/
@@ -132,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/*.py
+%{__sed} -i -e '1s,/usr/bin/python,%{__python},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
+%{__sed} -i -e '2s,/usr/bin/env python,,' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
 %endif
 
 %if %{with python3}
@@ -141,6 +144,9 @@ cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
 cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
+%{__sed} -i -e '1s,/usr/bin/env python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/*.py
+%{__sed} -i -e '1s,/usr/bin/python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
+%{__sed} -i -e '2s,/usr/bin/env python,,' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
 %endif
 
 %clean
