@@ -144,9 +144,9 @@ cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
 cp -p examples/* $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
-%{__sed} -i -e '1s,/usr/bin/env python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/*.py
-%{__sed} -i -e '1s,/usr/bin/python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
-%{__sed} -i -e '2s,/usr/bin/env python,,' $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/cgishell.cgi
+%{__sed} -i -e '1s,/usr/bin/env python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}/*.py
+%{__sed} -i -e '1s,/usr/bin/python,%{__python3},' $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}/cgishell.cgi
+%{__sed} -i -e '2s,/usr/bin/env python,,' $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}/cgishell.cgi
 %endif
 
 %clean
