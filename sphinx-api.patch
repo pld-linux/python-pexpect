@@ -1,0 +1,11 @@
+--- pexpect-4.8.0/doc/sphinxext/github.py~	2020-01-17 18:08:15.000000000 +0100
++++ pexpect-4.8.0/doc/sphinxext/github.py	2021-03-02 22:17:28.102562167 +0100
+@@ -146,7 +146,7 @@
+     
+     :param app: Sphinx application context.
+     """
+-    app.info('Initializing GitHub plugin')
++    #app.info('Initializing GitHub plugin')
+     app.add_role('ghissue', ghissue_role)
+     app.add_role('ghpull', ghissue_role)
+     app.add_role('ghuser', ghuser_role)
