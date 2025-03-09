@@ -95,8 +95,8 @@ Dokumentacja do modułu Pythona pexpect.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
 
 %build
 %if %{with python2}
