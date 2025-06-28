@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
-%bcond_without	python3	# CPython 3.x module
+%bcond_with	python3	# CPython 3.x module (built from python3-pexpect.spec)
 %bcond_with	tests	# py.test tests [require ptys, so not on builders]
 %bcond_without	doc	# Sphinx documentation
 
@@ -9,8 +9,11 @@
 Summary:	Pure Python Expect-like module
 Summary(pl.UTF-8):	Moduł podobny do narzędzia Expect napisany w czystym Pythonie
 Name:		python-%{module}
+# keep 4.8.x here for working python2 support
+# (even though 4.9.0 isn't marked as python3-only, but tests are incompatbible
+#  with python2, new socket_pexpect module is python3-specific etc.)
 Version:	4.8.0
-Release:	9
+Release:	10
 License:	ISC
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/pexpect/
@@ -18,7 +21,7 @@ Source0:	https://files.pythonhosted.org/packages/source/p/pexpect/pexpect-%{vers
 # Source0-md5:	153eb25184249d6a85fde9acf4804085
 Patch0:		%{name}-use_setuptools.patch
 Patch1:		sphinx-api.patch
-URL:		http://pexpect.readthedocs.io/
+URL:		https://pexpect.readthedocs.io/
 %if %{with tests} && %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
@@ -42,7 +45,7 @@ BuildRequires:	python3-pytest
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	sphinx-pdg
+BuildRequires:	sphinx-pdg-2
 %endif
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
@@ -108,6 +111,7 @@ sed -i -e "s#^intersphinx_mapping =.*#intersphinx_mapping = {'python': ('https:/
 %if %{with tests}
 # FSM test fails with python 2 because of redirected output(?)
 LC_ALL=C.UTF-8 \
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python} -m pytest -k 'not test_run_fsm' tests
 %endif
 %endif
@@ -117,12 +121,14 @@ LC_ALL=C.UTF-8 \
 
 %if %{with tests}
 LC_ALL=C.UTF-8 \
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %{__python3} -m pytest tests
 %endif
 %endif
 
 %if %{with doc}
-%{__make} -C doc html
+%{__make} -C doc html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
